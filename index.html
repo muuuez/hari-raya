@@ -3,79 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Hari Raya</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Hari Raya Sampul</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="emoji-rain" id="emojiRain"></div>
-    
+
+    <!-- Floating Emojis -->
+    <div class="emoji-container"></div>
+
+    <!-- Music Player -->
+    <audio id="bgMusic" loop>
+        <source src="src/Rahimah Rahim - Selamat Berhari Raya (Audio Video).mp3" type="audio/mp3">
+    </audio>
+    <button id="musicToggle" class="music-toggle">🔊</button>
+
+    <!-- Sampul & Letter -->
     <div class="sampul-container" id="sampulContainer">
-        <div class="sampul">
+        <div class="sampul" id="sampul">
             <div class="sampul-front">
-                <div class="sampul-flap"></div>
+                <div class="sampul-flap">
+                    <span class="pin">🌙</span>
+                </div>
                 <div class="sampul-body"></div>
             </div>
-            <div class="letter-container">
-                <div class="letter">
-                    <div class="greeting">
-                        <div class="text-malay">Selamat Hari Raya</div>
-                        <div class="text-arabic">عيد مبارك</div>
-                    </div>
-                    <div class="message">
-                        Selamat hari raya semua. Maaf zahir dan batin, tolong ampunkan dosa-dosa yang saya telah buat dan buat semua rasa sedih atau kecewa.
-                    </div>
+        </div>
+
+        <!-- Letter -->
+        <div class="letter-container" id="letterContainer">
+            <div class="letter">
+                <div class="letter-header">
+                    <h2 class="text-malay">Selamat Hari Raya</h2>
+                    <h2 class="text-arabic">عيد مبارك</h2>
                 </div>
+                <p class="message">Selamat hari raya.Maaf zahir dan batin.Minta maaf kalau ada buat salah..Saya doa rezeki korang dapat banyak duit raya</p>
+                <img src="src/photo_2025-03-30_23-07-24.jpg" alt="Hari Raya" class="letter-image">
             </div>
         </div>
     </div>
 
-    <script>
-        // Optimized emoji rain with requestAnimationFrame
-        const emojis = ['🌟', '🌙', '✨', '🕌', '🌠'];
-        const emojiRain = document.getElementById('emojiRain');
-        let lastTime = 0;
-        const emojiInterval = 100;
-        
-        function createEmoji(timestamp) {
-            if (!lastTime || timestamp - lastTime >= emojiInterval) {
-                lastTime = timestamp;
-                const emoji = document.createElement('div');
-                emoji.className = 'emoji';
-                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                emoji.style.left = Math.random() * 100 + 'vw';
-                emoji.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                emoji.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                emojiRain.appendChild(emoji);
-                
-                // Remove emoji after animation completes
-                setTimeout(() => {
-                    emoji.remove();
-                }, 5000);
-            }
-            requestAnimationFrame(createEmoji);
-        }
-        
-        // Start the optimized emoji rain
-        requestAnimationFrame(createEmoji);
-        
-        // Smooth sampul click handler with will-change optimization
-        const sampulContainer = document.getElementById('sampulContainer');
-        let isAnimating = false;
-        
-        sampulContainer.addEventListener('click', function() {
-            if (isAnimating) return;
-            isAnimating = true;
-            
-            // Enable hardware acceleration
-            this.style.willChange = 'transform';
-            this.classList.toggle('open');
-            
-            // Reset after animation completes
-            setTimeout(() => {
-                this.style.willChange = 'auto';
-                isAnimating = false;
-            }, 1000);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
