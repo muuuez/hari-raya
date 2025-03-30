@@ -3,26 +3,30 @@
     --sampul-medium: #555;
     --sampul-light: #f5f5f5;
     --animation-curve: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --letter-bg: #fff9e6;
 }
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
-    padding: 0;
     min-height: 100vh;
     background-color: #000;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     touch-action: manipulation;
+    padding: 20px;
 }
 
-/* Optimized Emoji Rain */
+/* ====================== */
+/* EMOJI RAIN ANIMATION */
+/* ====================== */
 .emoji-rain {
     position: fixed;
     top: 0;
@@ -36,7 +40,7 @@ body {
 
 .emoji {
     position: absolute;
-    font-size: 24px;
+    font-size: clamp(16px, 4vw, 24px);
     animation: fall linear forwards;
     opacity: 0.7;
     user-select: none;
@@ -50,31 +54,32 @@ body {
     }
 }
 
-/* Enhanced Sampul Container */
+/* ====================== */
+/* SAMPUL CONTAINER */
+/* ====================== */
 .sampul-container {
     position: relative;
-    width: 90%;
-    max-width: 400px;
-    height: auto;
+    width: min(90%, 400px);
+    aspect-ratio: 1/0.7;
     cursor: pointer;
     perspective: 1200px;
-    margin: 20px;
     z-index: 2;
     transform-style: preserve-3d;
     backface-visibility: hidden;
 }
 
-/* Optimized Sampul Animation */
 .sampul {
     position: relative;
     width: 100%;
-    height: 0;
-    padding-bottom: 70%;
+    height: 100%;
     transform-style: preserve-3d;
     transition: transform 1s var(--animation-curve);
     backface-visibility: hidden;
 }
 
+/* ====================== */
+/* SAMPUL DESIGN */
+/* ====================== */
 .sampul-front {
     position: absolute;
     width: 100%;
@@ -111,9 +116,8 @@ body {
         var(--sampul-light) 100%);
     transform-origin: top;
     transition: transform 0.8s var(--animation-curve) 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    place-items: center;
     backface-visibility: hidden;
     will-change: transform;
     z-index: 2;
@@ -121,8 +125,7 @@ body {
 
 .sampul-flap::before {
     content: "🌙";
-    font-size: clamp(20px, 4vw, 30px);
-    position: absolute;
+    font-size: clamp(20px, 6vw, 30px);
     animation: moonGlow 2s infinite alternate;
 }
 
@@ -135,27 +138,28 @@ body {
     }
 }
 
-/* Enhanced Letter Animation */
+/* ====================== */
+/* LETTER DESIGN */
+/* ====================== */
 .letter-container {
     position: absolute;
     width: 90%;
     height: 80%;
     bottom: 5%;
     left: 5%;
-    background-color: #fff9e6;
+    background-color: var(--letter-bg);
     border-radius: 5px;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    padding: clamp(10px, 3vw, 15px);
     transform: translateY(30%) scale(0.9);
     opacity: 0;
     transition: all 1s var(--animation-curve) 0.3s;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     z-index: -1;
     will-change: transform, opacity;
     backface-visibility: hidden;
+    overflow: hidden;
 }
 
 .letter {
@@ -166,40 +170,46 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    transform: translateZ(0);
+    gap: clamp(10px, 3vw, 20px);
 }
 
 .greeting {
-    margin-bottom: 20px;
-    transform: translateZ(0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .text-malay {
     font-size: clamp(18px, 5vw, 28px);
-    font-weight: bold;
+    font-weight: 700;
     color: #2c3e50;
-    margin-bottom: 10px;
-    transition: transform 0.5s var(--animation-curve);
+    line-height: 1.2;
 }
 
 .text-arabic {
     font-size: clamp(22px, 6vw, 36px);
-    font-weight: bold;
+    font-weight: 700;
     color: #27ae60;
     direction: rtl;
-    transition: transform 0.5s var(--animation-curve);
+    line-height: 1.3;
+    padding: 0 5px;
 }
 
 .message {
-    font-size: clamp(12px, 3vw, 16px);
+    font-size: clamp(13px, 3.5vw, 16px);
     color: #555;
     line-height: 1.5;
-    max-width: 90%;
-    transform: translateZ(0);
-    transition: transform 0.5s var(--animation-curve);
+    width: 100%;
+    padding: 0 clamp(10px, 4vw, 20px);
+    box-sizing: border-box;
+    word-break: break-word;
+    hyphens: auto;
 }
 
-/* Optimized Open State */
+/* ====================== */
+/* OPEN STATE */
+/* ====================== */
 .sampul-container.open .sampul {
     transform: rotateY(-15deg) translateZ(0);
 }
@@ -218,33 +228,9 @@ body {
     z-index: 1;
 }
 
-.sampul-container.open .text-malay,
-.sampul-container.open .text-arabic {
-    transform: translateY(0) translateZ(0);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 600px) {
-    .sampul-container {
-        max-width: 300px;
-    }
-    
-    .letter-container {
-        padding: 10px;
-    }
-}
-
-@media (max-width: 400px) {
-    .sampul-container {
-        max-width: 250px;
-    }
-    
-    .message {
-        font-size: 12px;
-    }
-}
-
-/* Smoother Idle Animation */
+/* ====================== */
+/* IDLE ANIMATION */
+/* ====================== */
 @keyframes slightShake {
     0%, 100% {
         transform: rotateZ(-0.5deg) translateZ(0);
@@ -257,4 +243,50 @@ body {
 .sampul-container:not(.open) .sampul {
     animation: slightShake 4s infinite var(--animation-curve);
     transform-origin: center bottom;
+}
+
+/* ====================== */
+/* RESPONSIVE ADJUSTMENTS */
+/* ====================== */
+@media (max-width: 500px) {
+    .sampul-container {
+        width: min(90%, 350px);
+    }
+    
+    .letter {
+        gap: 12px;
+    }
+    
+    .message {
+        font-size: clamp(14px, 3.8vw, 15px);
+        padding: 0 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .text-malay {
+        font-size: clamp(16px, 5.5vw, 24px);
+    }
+    
+    .text-arabic {
+        font-size: clamp(20px, 6.5vw, 30px);
+    }
+    
+    .message {
+        line-height: 1.4;
+    }
+}
+
+@media (max-width: 350px) {
+    .sampul-container {
+        width: min(95%, 320px);
+    }
+    
+    .letter {
+        gap: 8px;
+    }
+    
+    .message {
+        font-size: 13px;
+    }
 }
